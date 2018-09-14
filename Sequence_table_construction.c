@@ -16,11 +16,13 @@ typedef struct Vector {
     int *data;
 }Vector;
 
+
 void init (Vector *vector, int size) {
-    vector -> size = size;
-    vector ->length = 0;
+    vector -> size = size;        //表示顺序表当前的最大容量
+    vector ->length = 0;          //表示当前顺序表中的元素个数
     vector ->data = (int *)malloc(sizeof(int) * size);
 }
+
 
 void expand(Vector *vector) {
     int *old_data;
@@ -32,6 +34,7 @@ void expand(Vector *vector) {
     }
     free(old_data);
 }
+
 
 int insert(Vector *vector, int loc, int value) {
     int flag = 0;

@@ -1,13 +1,14 @@
 /*************************************************************************
-	> File Name: lianxi.c
+	> File Name: Stack_operation.c
 	> Author:gaoyu
 	> Mail:2282940822 
-	> Created Time: 2018年09月15日 星期六 16时32分04秒
+	> Created Time: 2018年09月27日 星期四 16时04分21秒
  ************************************************************************/
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <string.h>
 
 #define ERROR 0
 #define OK 1
@@ -46,9 +47,9 @@ int top(Stack *s) {
 
 int empty(Stack *s) {
     /*if (s->top_index < 0) {
-        return 0;
-    }else {
         return 1;
+    }else {
+        return 0;
     }*/
     return (s->top_index == -1);
 }
@@ -93,20 +94,19 @@ void clear(Stack *s) {
 }
 
 int main() {
-    int m, a;
-    char b;
-    scanf ("%d", &m);
+    
     Stack *numbers = (Stack *)malloc(sizeof(Stack));
-    init(numbers, m);
+    init(numbers, 20);
   	Stack *operators = (Stack *)malloc(sizeof(Stack));
-    init(operators, m);
-    char *buffer = (char *)malloc(m + 1);
-    scanf ("%s", buffer);
+    init(operators, 20);
+    char *buffer = (char *)malloc(sizeof (char) * 21);
+    scanf ("%[^\n]s", buffer);
+    int m = strlen(buffer);
     for (int i = 0; i < m; i++) {
-        if (isdigit(buffer[i])) {   //isdigit() 判断一个数是否为阿拉伯数字,包含在头文件<ctype.h>
+        if (isdigit(buffer[i])) {
             push(numbers, buffer[i] - '0');
         } else {
-            while (!empty(operators) && !precede(buffer[i], top(operators))) {//运算符栈不为空且栈顶运算符优先级高
+            while (!empty(operators) && !precede(buffer[i], top(operators))) {
                 calc(numbers, operators);
             }
             push(operators, buffer[i]);

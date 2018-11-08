@@ -10,9 +10,13 @@
 #include <string.h>
 #include <time.h>
 
-/*#define swap(a, b) {\
+/*
+
+#define swap(a, b) {\
     a ^= b; b ^= a; a ^= b;\
-}*/
+}
+
+*/
 
 void swap (int *a,int *b) {
     int temp = *a;
@@ -37,10 +41,10 @@ void insert_sort (int *num, int n) {
     for (int i = 1; i < n; i++) {
         for (int j = i; j > 0 && num[j] < num[j - 1]; j--) {
             swap(&num[j], &num[j - 1]); 
-            //swap(num[j], num[j - 1]);
         }
     }
 }
+
 
 //冒泡排序
 void bubble_sort (int *num, int n) {
@@ -50,7 +54,6 @@ void bubble_sort (int *num, int n) {
         for (int j = 0; j < n - i; j++) {
             if (num[j] <= num[j + 1])  continue;
             swap(&num[j], &num[j + 1]);
-            //swap(num[j], num[j - 1]);
             times ++;
         }
     }
@@ -62,7 +65,6 @@ void merge_sort (int *num , int l, int r) {
     if (r - l <= 1) {
         if (r - l == 1 && num[l] > num[r]) {
             swap(&num[l], &num[r]);
-            //swap(num[l], num[r]);
         }
         return;
     }
@@ -72,6 +74,7 @@ void merge_sort (int *num , int l, int r) {
     merge_sort(num, mid + 1, r);
     int *temp = (int *)malloc(sizeof(int) * (r - l + 1));
     int p1 = l, p2 = mid + 1, k = 0;
+    
     while (p1 <= mid || p2 <= r) {
         if (p2 > r || (p1 <= mid && num[p1] < num[p2])) {
             temp[k++] = num[p1++];
@@ -80,8 +83,8 @@ void merge_sort (int *num , int l, int r) {
         }
     }
     memcpy(num + l, temp, sizeof(int) * (r - l + 1));
+    free(temp);
 }
-
 
 
 void randint(int *num, int n) {

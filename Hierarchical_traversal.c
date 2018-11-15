@@ -5,6 +5,9 @@
 	> Created Time: 2018年10月24日 星期三 22时05分19秒
  ************************************************************************/
 
+
+/**************************************层次遍历***********************************/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -12,23 +15,23 @@
 #define OK 1
 
 
-typedef struct Node {
+typedef struct Node { 
     char data;
     struct Node *lchild, *rchild;
 } Node, *pNode;
 
-typedef struct Stack {
+typedef struct Stack {   //栈结构体
     pNode *data;
     int size, top;
 } Stack, *pStack;
 
 
-typedef struct Queue {
+typedef struct Queue {   // 队列结构体
     pNode *data;
     int head, tail, len, cnt;
 } Queue, *pQueue;
 
-void init_queue(pQueue q, int len) {
+void init_queue(pQueue q, int len) {    //初始化队列
     q->data = (pNode *)malloc(sizeof(pNode) * len);
     q->len = len;
     q->head = 0;
@@ -36,7 +39,7 @@ void init_queue(pQueue q, int len) {
     q->cnt = 0;
 }
  
-int push_queue(pQueue q, pNode e) {
+int push_queue(pQueue q, pNode e) {//入队
     if (q->cnt == q->len) {
         return ERROR;
     }
@@ -46,11 +49,11 @@ int push_queue(pQueue q, pNode e) {
     return OK;
 }
 
-int empty_queue(pQueue q) {
+int empty_queue(pQueue q) {//判断队列是否为空
     return q->cnt == 0;
 }
 
-int pop_queue(pQueue q) {
+int pop_queue(pQueue q) {//出队
     if (empty_queue(q)) {
         return ERROR;
     }
@@ -59,23 +62,23 @@ int pop_queue(pQueue q) {
     return OK;
 }
 
-pNode front_queue(pQueue q) {
+pNode front_queue(pQueue q) {//队首元素
     return q->data[q->head];
 }
 
-void clear_queue(pQueue q) {
+void clear_queue(pQueue q) {//释放队列
     if (!q) return ;
     free(q->data);
     free(q);
 }
 
-void init_stack(Stack *s, int len) {
+void init_stack(Stack *s, int len) {//初始化栈
     s->data = (pNode *)malloc(sizeof(pNode) * len);
     s->size = len;
     s->top = -1;
 }
 
-int push_stack(Stack *s, pNode e) {
+int push_stack(Stack *s, pNode e) {//入栈
     if (s->top >= s->size - 1) {
         return ERROR;
     }
@@ -83,11 +86,11 @@ int push_stack(Stack *s, pNode e) {
     return OK;
 }
 
-int empty_stack(Stack *s) {
+int empty_stack(Stack *s) {//判断栈是否为空
     return s->top == -1;
 }
 
-int pop_stack(Stack *s) {
+int pop_stack(Stack *s) {//出栈
     if (empty_stack(s)) {
         return ERROR;
     }
@@ -95,16 +98,16 @@ int pop_stack(Stack *s) {
     return OK;
 }
 
-pNode top_stack(Stack *s) {
+pNode top_stack(Stack *s) {//栈顶元素
     return s->data[s->top];
 }
 
-void clear_stack(Stack *s) {
+void clear_stack(Stack *s) {//释放栈
     free(s->data);
     free(s);
 }
 
-pNode init(char data) {
+pNode init(char data) {//初始化树的结点
     pNode p = (pNode)malloc(sizeof(Node));
     p->data = data;
     p->lchild = NULL;
@@ -112,7 +115,7 @@ pNode init(char data) {
     return p;
 }
 
-void clear(pNode p) {
+void clear(pNode p) {//释放结点
     if (!p) return ;
     if (p->lchild) {
         clear(p->lchild);
@@ -123,7 +126,7 @@ void clear(pNode p) {
     free(p);
 }
 
-pNode build(char *str, int *node_num) {
+pNode build(char *str, int *node_num) {//创建二叉树
     pNode p = NULL, last_p = NULL;
     Stack *stack = (Stack *)malloc(sizeof(Stack));
     init_stack(stack, strlen(str));
@@ -163,7 +166,7 @@ pNode build(char *str, int *node_num) {
 }
 
 
-void output(pNode p, int node_num) {
+void output(pNode p, int node_num) {//层次遍历输出
     if (node_num == 0) {
         return ;
     }
